@@ -11,5 +11,7 @@ data class StatusMessage(
         val receiver: String,
         var receiver_org_number: String = "",
         var sender_org_number: String = "",
-        val service_identifier: String
+        val service_identifier: String,
+        val logger_name: String = "STATUS",
+        val loglevel: String = "INFO"
 )
