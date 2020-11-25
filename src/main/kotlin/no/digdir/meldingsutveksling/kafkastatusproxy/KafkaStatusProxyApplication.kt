@@ -1,4 +1,4 @@
-package no.difi.meldingsutveksling.kafkastatusproxy
+package no.digdir.meldingsutveksling.kafkastatusproxy
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

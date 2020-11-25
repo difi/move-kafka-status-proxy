@@ -1,4 +1,4 @@
-package no.difi.meldingsutveksling.kafkastatusproxy.domain
+package no.digdir.meldingsutveksling.kafkastatusproxy.domain
 
 data class StatusMessage(
         val status: Status,

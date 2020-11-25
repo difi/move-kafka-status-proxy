@@ -1,6 +1,6 @@
-package no.difi.meldingsutveksling.kafkastatusproxy
+package no.digdir.meldingsutveksling.kafkastatusproxy
 
-import no.difi.meldingsutveksling.kafkastatusproxy.domain.StatusMessage
+import no.digdir.meldingsutveksling.kafkastatusproxy.domain.StatusMessage
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Component
 
-@ConditionalOnProperty(name = ["digdir.move.statusproxy.testconsume"], havingValue = "true")
+@ConditionalOnProperty(name = ["digdir.move.statusproxy.consume-topic"], havingValue = "true")
 @Component
 class LoggingConsumer {
 

@@ -1,4 +1,4 @@
-package no.difi.meldingsutveksling.kafkastatusproxy.config
+package no.digdir.meldingsutveksling.kafkastatusproxy.config
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.autoconfigure.security.SecurityProperties
