@@ -1,6 +1,6 @@
-package no.digdir.meldingsutveksling.kafkastatusproxy
+package no.digdir.meldingsutveksling.loggingproxy
 
-import no.digdir.meldingsutveksling.kafkastatusproxy.domain.StatusMessage
+import no.digdir.meldingsutveksling.loggingproxy.domain.StatusMessage
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

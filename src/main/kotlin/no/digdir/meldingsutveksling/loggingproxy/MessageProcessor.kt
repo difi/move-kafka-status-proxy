@@ -1,6 +1,6 @@
-package no.digdir.meldingsutveksling.kafkastatusproxy
+package no.digdir.meldingsutveksling.loggingproxy
 
-import no.digdir.meldingsutveksling.kafkastatusproxy.domain.StatusMessage
+import no.digdir.meldingsutveksling.loggingproxy.domain.StatusMessage
 
 object MessageProcessor {
 

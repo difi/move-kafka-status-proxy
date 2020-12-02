@@ -1,4 +1,4 @@
-package no.digdir.meldingsutveksling.kafkastatusproxy
+package no.digdir.meldingsutveksling.loggingproxy
 
 class MessageProcessingException : Exception {
     constructor(m: String): super(m)

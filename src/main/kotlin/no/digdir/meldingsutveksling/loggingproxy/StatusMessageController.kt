@@ -1,6 +1,8 @@
-package no.digdir.meldingsutveksling.kafkastatusproxy
+package no.digdir.meldingsutveksling.loggingproxy
 
-import no.digdir.meldingsutveksling.kafkastatusproxy.domain.StatusMessage
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.ObjectMapper
+import no.digdir.meldingsutveksling.loggingproxy.domain.StatusMessage
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
@@ -11,14 +13,22 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/status")
-class StatusMessageController(val kt: KafkaTemplate<String, StatusMessage>) {
+@RequestMapping("/api")
+class StatusMessageController(val kt: KafkaTemplate<String, JsonNode>) {
 
     val log: Logger = LoggerFactory.getLogger(this::class.java)
+    val om = ObjectMapper()
 
     @PostMapping
+    fun postLog(@RequestBody body: JsonNode): ResponseEntity<Any> {
+        log.trace("Received: ${body.toPrettyString()}")
+        kt.sendDefault(body)
+        return ResponseEntity.ok().build()
+    }
+
+    @PostMapping("/status")
     fun postStatus(@RequestBody statusMessage: StatusMessage): ResponseEntity<Any> {
-        log.trace("Incoming request: $statusMessage")
+        log.trace("Received status: $statusMessage")
 
         try {
             MessageProcessor.process(statusMessage)
@@ -26,7 +36,7 @@ class StatusMessageController(val kt: KafkaTemplate<String, StatusMessage>) {
             return ResponseEntity.badRequest().body(e.message)
         }
 
-        kt.sendDefault(statusMessage)
+        kt.sendDefault(om.valueToTree(statusMessage))
         return ResponseEntity.ok().build()
     }
 

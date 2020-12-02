@@ -1,6 +1,6 @@
-package no.digdir.meldingsutveksling.kafkastatusproxy.config
+package no.digdir.meldingsutveksling.loggingproxy.config
 
-import no.digdir.meldingsutveksling.kafkastatusproxy.domain.StatusMessage
+import com.fasterxml.jackson.databind.JsonNode
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -11,23 +11,23 @@ import reactor.kafka.sender.KafkaSender
 import reactor.kafka.sender.SenderOptions
 
 @Configuration
-class KafkaConfig {
+class LoggingProxyConfig {
 
     @Bean
-    fun producerFactory(kafkaProperties: KafkaProperties): ProducerFactory<String, StatusMessage> {
+    fun producerFactory(kafkaProperties: KafkaProperties): ProducerFactory<String, JsonNode> {
         return DefaultKafkaProducerFactory(kafkaProperties.buildProducerProperties())
     }
 
     @Bean
-    fun kafkaTemplate(producerFactory: ProducerFactory<String, StatusMessage>, props: StatusProxyProperties): KafkaTemplate<String, StatusMessage> {
+    fun kafkaTemplate(producerFactory: ProducerFactory<String, JsonNode>, props: StatusProxyProperties): KafkaTemplate<String, JsonNode> {
         val kt = KafkaTemplate(producerFactory)
         kt.defaultTopic = props.topic
         return kt
     }
 
     @Bean
-    fun kafkaSender(kafkaProperties: KafkaProperties): KafkaSender<String, StatusMessage> {
-        val senderOptions = SenderOptions.create<String, StatusMessage>(kafkaProperties.buildProducerProperties())
+    fun kafkaSender(kafkaProperties: KafkaProperties): KafkaSender<Nothing, JsonNode> {
+        val senderOptions = SenderOptions.create<Nothing, JsonNode>(kafkaProperties.buildProducerProperties())
         return KafkaSender.create(senderOptions)
     }
 

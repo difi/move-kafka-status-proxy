@@ -1,4 +1,4 @@
-package no.digdir.meldingsutveksling.kafkastatusproxy.config
+package no.digdir.meldingsutveksling.loggingproxy.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
