@@ -4,8 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class KafkaStatusProxyApplication
+class LoggingProxyApplication
 
 fun main(args: Array<String>) {
-	runApplication<KafkaStatusProxyApplication>(*args)
+	runApplication<LoggingProxyApplication>(*args)
 }
