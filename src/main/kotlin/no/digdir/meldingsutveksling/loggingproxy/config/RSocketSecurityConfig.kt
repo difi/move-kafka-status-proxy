@@ -20,7 +20,7 @@ class RSocketSecurityConfig {
     }
 
     @Bean
-    fun rsocketInterceptor(rsocket: RSocketSecurity, props: StatusProxyProperties): PayloadSocketAcceptorInterceptor {
+    fun rsocketInterceptor(rsocket: RSocketSecurity, props: LoggingProxyProperties): PayloadSocketAcceptorInterceptor {
         return if (props.enableAuth) {
             rsocket.authorizePayload {
                 it.anyRequest().authenticated()

@@ -25,11 +25,11 @@ class WebfluxSecurityConfig {
     fun userDetailsService(props: SecurityProperties): ReactiveUserDetailsService {
         val encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder()
         val user = User.builder()
-                .username(props.user.name)
-                .password(props.user.password)
-                .authorities("ADMIN")
-                .passwordEncoder(encoder::encode)
-                .build()
+            .username(props.user.name)
+            .password(props.user.password)
+            .authorities("ADMIN")
+            .passwordEncoder(encoder::encode)
+            .build()
         return MapReactiveUserDetailsService(user)
     }
 
@@ -37,22 +37,22 @@ class WebfluxSecurityConfig {
     @Order(1)
     fun actuatorFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain {
         return http
-                .securityMatcher(anyExchange())
-                .cors().and().csrf().disable()
-                .authorizeExchange {
-                    it.pathMatchers("/actuator/health").permitAll()
-                            .anyExchange().authenticated()
-                }
-                .httpBasic().and()
-                .build()
+            .securityMatcher(anyExchange())
+            .cors().and().csrf().disable()
+            .authorizeExchange {
+                it.pathMatchers("/actuator/health").permitAll()
+                    .anyExchange().authenticated()
+            }
+            .httpBasic().and()
+            .build()
     }
 
     @Bean
     @Order(0)
-    fun permitAllChain(http: ServerHttpSecurity, props: StatusProxyProperties): SecurityWebFilterChain {
+    fun permitAllChain(http: ServerHttpSecurity, props: LoggingProxyProperties): SecurityWebFilterChain {
         val builder = http
-                .securityMatcher(pathMatchers("/api/**"))
-                .cors().and().csrf().disable()
+            .securityMatcher(pathMatchers("/api/**"))
+            .cors().and().csrf().disable()
         return if (props.enableAuth) {
             builder.authorizeExchange {
                 it.pathMatchers("/api/**").authenticated()

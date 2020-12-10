@@ -19,9 +19,9 @@ class LoggingProxyConfig {
     }
 
     @Bean
-    fun kafkaTemplate(producerFactory: ProducerFactory<String, JsonNode>, props: StatusProxyProperties): KafkaTemplate<String, JsonNode> {
+    fun kafkaTemplate(producerFactory: ProducerFactory<String, JsonNode>, props: LoggingProxyProperties): KafkaTemplate<String, JsonNode> {
         val kt = KafkaTemplate(producerFactory)
-        kt.defaultTopic = props.topic
+        kt.defaultTopic = props.statusTopic
         return kt
     }
 
