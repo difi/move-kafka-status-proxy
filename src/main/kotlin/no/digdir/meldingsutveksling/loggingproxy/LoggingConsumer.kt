@@ -2,6 +2,7 @@ package no.digdir.meldingsutveksling.loggingproxy
 
 import no.digdir.meldingsutveksling.loggingproxy.domain.StatusMessage
 import org.apache.kafka.clients.consumer.ConsumerRecord
+import org.apache.kafka.streams.kstream.Windowed
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
@@ -24,4 +25,17 @@ class LoggingConsumer {
         log.info("New message on status-topic: $cr")
     }
 
+    @KafkaListener(topics = ["status-count"], containerFactory = "countListenerContainerFactory")
+    fun countListener(cr: ConsumerRecord<Windowed<StatusKey>, Long>) {
+//        log.info("New message on status-count: $cr")
+        log.info("New count: Status - ${cr.key()} - value ${cr.value()}")
+    }
+
 }
+
+data class StatusKey(
+    val orgnr: String = "",
+    val status: String = "",
+    val service_identifier: String = ""
+//    val timeslot: String = ""
+)

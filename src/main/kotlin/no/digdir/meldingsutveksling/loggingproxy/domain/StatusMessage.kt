@@ -1,5 +1,7 @@
 package no.digdir.meldingsutveksling.loggingproxy.domain
 
+import java.time.LocalDateTime
+
 data class StatusMessage(
     val status: Status,
     val conversation_id: String,
@@ -13,5 +15,6 @@ data class StatusMessage(
     var sender_org_number: String = "",
     val service_identifier: String,
     val logger_name: String = "STATUS",
-    val loglevel: String = "INFO"
+    val loglevel: String = "INFO",
+    val timestamp: LocalDateTime = LocalDateTime.now()
 )
