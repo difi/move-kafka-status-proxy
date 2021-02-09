@@ -8,8 +8,6 @@ import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.common.serialization.LongDeserializer
 import org.apache.kafka.common.serialization.Serdes
 import org.apache.kafka.common.serialization.StringDeserializer
-import org.apache.kafka.streams.kstream.Windowed
-import org.apache.kafka.streams.kstream.WindowedSerdes
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -43,7 +41,7 @@ class LoggingProxyConfig {
     }
 
     @Bean
-    fun countListenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<Windowed<StatusKey>, Long> {
+    fun countListenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<StatusKey, Long> {
         val props = mapOf(
             ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG to "localhost:9092",
             ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG to StringDeserializer::class.java,
@@ -58,11 +56,9 @@ class LoggingProxyConfig {
         keyDeserializer.configure(keyProps, false)
         val keySerde = Serdes.serdeFrom(keySerializer, keyDeserializer)
 
-        val timeWindowedSerde = WindowedSerdes.TimeWindowedSerde(keySerde)
-
-        val factory = ConcurrentKafkaListenerContainerFactory<Windowed<StatusKey>, Long>()
-        val consumerFactory = DefaultKafkaConsumerFactory<Windowed<StatusKey>, Long>(props)
-        consumerFactory.setKeyDeserializer(timeWindowedSerde.deserializer())
+        val factory = ConcurrentKafkaListenerContainerFactory<StatusKey, Long>()
+        val consumerFactory = DefaultKafkaConsumerFactory<StatusKey, Long>(props)
+        consumerFactory.setKeyDeserializer(keySerde.deserializer())
         factory.consumerFactory = consumerFactory
         return factory
 
