@@ -14,9 +14,10 @@ object MessageProcessor {
             throw MessageProcessingException("Sender field (${statusMessage.sender}) is not valid ISO6523 format.")
         }
 
-        if (!iso6523Regex.matches(statusMessage.receiver) && !personnrRegex.matches(statusMessage.receiver)) {
-            throw MessageProcessingException("Receiver field (${statusMessage.receiver}) is not valid ISO6523 or personal identification number.")
-        }
+        // TODO fix for personal numbers
+//        if (!iso6523Regex.matches(statusMessage.receiver) && !personnrRegex.matches(statusMessage.receiver)) {
+//            throw MessageProcessingException("Receiver field (${statusMessage.receiver}) is not valid ISO6523 or personal identification number.")
+//        }
 
         if (!idRegex.matches(statusMessage.message_id) || !idRegex.matches(statusMessage.conversation_id)) {
             throw MessageProcessingException("message_id and conversation_id must be of type UUID")

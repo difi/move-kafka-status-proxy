@@ -26,7 +26,7 @@ class LoggingConsumer {
 
     @KafkaListener(topics = ["status-count"], containerFactory = "countListenerContainerFactory")
     fun countListener(cr: ConsumerRecord<StatusKey, Long>) {
-        log.info("New count: Status - ${cr.key()} - value ${cr.value()}")
+//        log.info("New count: Status - ${cr.key()} - value ${cr.value()}")
     }
 
 }
